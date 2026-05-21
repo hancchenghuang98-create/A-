@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A股真实数据分析台</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">REAL-TIME A-SHARE ANALYZER</p>
+        <h1>接入真实 A 股数据的股票分析网站</h1>
+        <p class="hero-text">
+          这个版本把演示站升级成了联网分析台。数据层走本地 Node 代理，前端支持真实搜索、更多股票指标、股价走势图与 K 线图。
+        </p>
+        <div class="hero-badges">
+          <span>真实日线行情</span>
+          <span>前复权 / 不复权切换</span>
+          <span>估值与财务指标</span>
+          <span>MACD / RSI / 均线</span>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <h2>适合 A 股的分析口径</h2>
+        <ul>
+          <li>基本面看估值、盈利质量、现金流和增长。</li>
+          <li>技术面看趋势、量能、动量与回撤位置。</li>
+          <li>政策面结合行业、板块与 A 股制度约束做风格适配。</li>
+          <li>不承诺收益，只提高筛选质量和执行纪律。</li>
+        </ul>
+      </aside>
+    </header>
+
+    <div id="statusBanner" class="status-banner warn"></div>
+
+    <section class="toolbar card">
+      <div class="search-box">
+        <label for="searchInput">搜索 A 股</label>
+        <div class="search-row">
+          <input id="searchInput" type="text" placeholder="输入股票代码或名称，如 600519.SH / 贵州茅台">
+          <button id="searchButton" type="button">查询</button>
+        </div>
+        <div id="searchResults" class="search-results"></div>
+      </div>
+
+      <div class="toolbar-side">
+        <label>
+          <span>复权方式</span>
+          <select id="adjustment">
+            <option value="qfq">前复权</option>
+            <option value="bfq">不复权</option>
+          </select>
+        </label>
+        <label>
+          <span>观察区间</span>
+          <select id="range">
+            <option value="6m">近 6 个月</option>
+            <option value="1y" selected>近 1 年</option>
+            <option value="3y">近 3 年</option>
+            <option value="5y">近 5 年</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="quick-picks card">
+      <div class="section-head compact">
+        <div>
+          <p class="section-kicker">快速打开</p>
+          <h2>常看样本</h2>
+        </div>
+      </div>
+      <div class="quick-links">
+        <button data-ts-code="600519.SH" type="button">贵州茅台</button>
+        <button data-ts-code="000333.SZ" type="button">美的集团</button>
+        <button data-ts-code="300750.SZ" type="button">宁德时代</button>
+        <button data-ts-code="601899.SH" type="button">紫金矿业</button>
+        <button data-ts-code="600941.SH" type="button">中国移动</button>
+        <button data-ts-code="300308.SZ" type="button">中际旭创</button>
+      </div>
+    </section>
+
+    <section class="watchlist card">
+      <div class="section-head compact">
+        <div>
+          <p class="section-kicker">联网筛选</p>
+          <h2>自选池批量比较</h2>
+        </div>
+      </div>
+      <div class="watchlist-toolbar">
+        <input id="watchlistInput" type="text" placeholder="输入多个代码，英文逗号分隔，如 600519.SH,000333.SZ,300750.SZ">
+        <button id="watchlistButton" type="button">批量评分</button>
+      </div>
+      <div id="watchlistTable" class="watchlist-table"></div>
+    </section>
+
+    <main class="layout">
+      <section class="main-column">
+        <div id="loadingState" class="loading-state" hidden>正在拉取真实 A 股数据...</div>
+
+        <section id="metaPanel" class="card"></section>
+
+        <section class="summary-grid">
+          <div id="quoteCards" class="four-grid"></div>
+          <div id="scoreCards" class="four-grid"></div>
+        </section>
+
+        <section class="card chart-card">
+          <div class="section-head compact">
+            <div>
+              <p class="section-kicker">图表</p>
+              <h2>股价走势图与 K 线图</h2>
+            </div>
+            <span class="caption">成交量与 MA5 / 10 / 20 / 60 同屏</span>
+          </div>
+          <div id="klineChart" class="chart"></div>
+        </section>
+
+        <section id="diagnostics" class="diagnostics card"></section>
+      </section>
+
+      <aside class="side-column">
+        <section id="companyPanel" class="card"></section>
+        <section id="metricsPanel" class="card"></section>
+        <section id="technicalPanel" class="card"></section>
+        <section id="policyPanel" class="card"></section>
+        <section id="announcementsPanel" class="card"></section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

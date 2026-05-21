@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: a-share-analyzer
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 3030
+      - key: HOST
+        value: 0.0.0.0
+      - key: TUSHARE_TOKEN
+        sync: false

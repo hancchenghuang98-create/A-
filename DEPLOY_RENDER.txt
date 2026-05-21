@@ -1,0 +1,60 @@
+A股分析网站上线步骤（Render 版）
+
+一、你现在已经有的文件
+1. package.json
+2. Dockerfile
+3. render.yaml
+4. server.js
+
+这些文件已经说明：
+- 这是一个 Web 服务
+- 可以被 Render 直接部署
+- 需要环境变量 TUSHARE_TOKEN
+
+二、上线前你需要准备的东西
+1. 一个 GitHub 账号
+2. 一个 Render 账号
+3. 一个可用的 Tushare Token
+
+三、把项目传到 GitHub
+1. 打开 GitHub
+2. 新建一个仓库，比如：
+   a-share-analyzer
+3. 把这个目录里的全部文件上传到仓库：
+   C:\Users\huanghc\Downloads\a-share-analyzer
+
+四、在 Render 上部署
+1. 登录 Render
+2. 点击 New
+3. 选择 Web Service
+4. 连接你的 GitHub
+5. 选择刚才上传的仓库
+6. Render 会识别 render.yaml
+7. 在环境变量里填：
+
+TUSHARE_TOKEN=你的Token
+
+五、部署完成后
+1. Render 会给你一个公网地址
+2. 你直接打开这个地址即可
+3. 以后每次你往 GitHub 推送更新，Render 都可以自动重新部署
+
+六、如果部署失败，优先检查
+1. TUSHARE_TOKEN 有没有填
+2. 仓库里是否包含：
+   package.json
+   Dockerfile
+   render.yaml
+   server.js
+3. Render 日志里是否提示端口错误
+
+七、端口说明
+这个项目已经支持云端端口环境变量，不需要你手动改代码。
+
+八、这个网站现在已经支持
+1. 股票搜索
+2. 真实行情
+3. K线图
+4. 公告列表
+5. 公司画像
+6. 自选股批量评分

@@ -1,0 +1,15 @@
+{
+  "name": "a-share-analyzer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A-share stock analyzer with live Tushare-backed data, watchlists, charts, and announcements.",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check app.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
