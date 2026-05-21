@@ -606,6 +606,12 @@ async function getWatchlistDetails(codes) {
 }
 
 async function serveStatic(req, res, pathname) {
+  if (pathname === "/favicon.ico") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
   const relative = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
   if (BLOCKED_STATIC.has(relative)) {
     throw new HttpError(403, "禁止访问该文件。");
@@ -614,7 +620,15 @@ async function serveStatic(req, res, pathname) {
   if (!filePath.startsWith(ROOT)) {
     throw new HttpError(403, "非法路径。");
   }
-  const content = await fsp.readFile(filePath);
+  let content;
+  try {
+    content = await fsp.readFile(filePath);
+  } catch (error) {
+    if (error && error.code === "ENOENT") {
+      throw new HttpError(404, `找不到资源：${pathname}`);
+    }
+    throw error;
+  }
   file(res, 200, content, path.extname(filePath));
 }
 
